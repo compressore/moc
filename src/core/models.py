@@ -2218,12 +2218,12 @@ class MaterialDemand(Record):
     end_date = models.DateField(null=True, blank=True)
     owner = models.ForeignKey(Record, on_delete=models.CASCADE, related_name="demand")
     AVAILABILITY = [
-        ('unavailable', 'unavailable'),
-        ('occasionally', 'occasionally available'),
-        ('short-term', 'available short-term use'),
-        ('long-term', 'available for long-term use'),
+        ('Unavailable', 'Unavailable'),
+        ('Occasionally', 'Occasionally available'),
+        ('Short_term_use', 'Available short-term use'),
+        ('Long_term_use', 'Available for long-term use'),
     ]
-    availability = models.CharField(max_length=50, null=True, blank=True, choices=AVAILABILITY)
+    availability = models.CharField(max_length=50, null=True,  blank=True, choices=AVAILABILITY)
 
     def __str__(self):
         return self.material_type.name
