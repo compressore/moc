@@ -13,3 +13,4 @@ src/ie/settings.py
 config/*production*
 .idea/*
 sync*
+src/core/migrations/*
