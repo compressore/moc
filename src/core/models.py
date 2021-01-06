@@ -544,16 +544,6 @@ class Organization(Record):
         ("other", "Other"),
     )
     type = models.CharField(max_length=20, choices=ORG_TYPE)
-
-    nace_code = models.ForeignKey("NaceCode", on_delete=models.CASCADE, null=True, blank=True)
-    phone = models.CharField(max_length=15, null=True, blank=True)
-    founding_year = models.DateField(null=True, blank=True)
-    purchasing_local = models.FloatField(null=True, blank=True)
-    purchasing_regional = models.FloatField(null=True, blank=True)
-    purchasing_export = models.FloatField(null=True, blank=True)
-    sales_local = models.FloatField(null=True, blank=True)
-    sales_regional = models.FloatField(null=True, blank=True)
-    sales_export = models.FloatField(null=True, blank=True)
     updated_at = models.DateField(null=True, auto_now=True)
 
     def save(self, *args, **kwargs):
@@ -2552,3 +2542,17 @@ class Milestone(Record):
 #    )
 #    info = models.CharField(max_length=100)
 
+class LocalBusinessDependency(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["id"]
+        verbose_name_plural = "Local Business Dependencies"
+
+class LocalBusinessLink(models.Model):
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True, blank=True, related_name='organization')
+    dependence = models.ForeignKey(LocalBusinessDependency, on_delete=models.CASCADE, null=True, blank=True)
+    business= models.ForeignKey(Organization, on_delete=models.CASCADE, null=True, blank=True)
