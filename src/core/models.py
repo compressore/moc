@@ -512,6 +512,12 @@ class Blog(Record):
     objects_unfiltered = models.Manager()
     objects_include_private = PrivateRecordManager()
 
+class AvailableDataType(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
 class Organization(Record):
     url = models.CharField(max_length=255, null=True, blank=True)
     twitter = models.CharField(max_length=255, null=True, blank=True)
@@ -535,6 +541,9 @@ class Organization(Record):
         ("other", "Other"),
     )
     type = models.CharField(max_length=20, choices=ORG_TYPE)
+    data_types = models.ManyToManyField("AvailableDataType")
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    uuid = models.UUIDField(null=True) 
 
     def save(self, *args, **kwargs):
         self.slug = slugify(unidecode(self.name))
